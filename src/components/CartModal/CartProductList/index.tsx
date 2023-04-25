@@ -9,6 +9,9 @@ import { CartContext } from "../../Providers/cartContext";
 const CartProductList = () => {
   const { cart, clearCart } = useContext(CartContext);
 
+  const totalCart = cart.reduce((previousValue, product) => {
+    return previousValue + product.price;
+  }, 0);
   return (
     <StyledCartProductList>
       <ul>
@@ -25,7 +28,9 @@ const CartProductList = () => {
         <StyledParagraph>
           <strong>Total</strong>
         </StyledParagraph>
-        <StyledParagraph className="total">R$ 14,00</StyledParagraph>
+        <StyledParagraph className="total">
+          R${totalCart.toFixed(2)}
+        </StyledParagraph>
       </div>
       <StyledButton
         $buttonSize="default"
