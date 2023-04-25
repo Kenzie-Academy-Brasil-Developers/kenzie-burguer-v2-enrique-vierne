@@ -11,13 +11,14 @@ export const registerFormSchema = z
       .email("Forneça um e-mail válido"),
     password: z
       .string()
-      .min(8, "A senha precisa conter pelo menos 8 caracteres")
+      .min(7, "A senha precisa conter pelo menos 8 caracteres")
       .regex(
         /(?=.*?[#?!@$%^&*-])/,
         "É necessário pelo menos um caracter especial"
       )
       .regex(/(?=.*?[A-Z])/, "É necessário pelo menos uma letra maiúscula")
-      .regex(/(?=.*?[a-z])/, "É necessário pelo menos uma letra minúscula"),
+      .regex(/(?=.*?[a-z])/, "É necessário pelo menos uma letra minúscula")
+      .regex(/(?=.*?[0-9])/, "É necessário pelo menos um número"),
     confirm: z.string().nonempty("É obrigatório confirmar a senha"),
   })
   .refine(({ password, confirm }) => password === confirm, {
