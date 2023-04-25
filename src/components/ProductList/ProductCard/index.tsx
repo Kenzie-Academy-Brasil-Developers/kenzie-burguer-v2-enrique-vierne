@@ -1,23 +1,35 @@
-import { StyledProductCard } from './style';
-import { StyledButton } from '../../../styles/button';
-import { StyledParagraph, StyledTitle } from '../../../styles/typography';
+import { StyledProductCard } from "./style";
+import { StyledButton } from "../../../styles/button";
+import { StyledParagraph, StyledTitle } from "../../../styles/typography";
+import { IFood } from "../../Providers/cartContext";
 
-const ProductCard = () => (
-  <StyledProductCard>
-    <div className='imageBox'>
-      <img src='https://i.imgur.com/Vng6VzV.png' alt='Hamburguer' />
-    </div>
-    <div className='content'>
-      <StyledTitle tag='h3' $fontSize='three'>
-        Hamburguer
-      </StyledTitle>
-      <StyledParagraph className='category'>Sanduíches</StyledParagraph>
-      <StyledParagraph className='price'>R$ 14,00</StyledParagraph>
-      <StyledButton $buttonSize='medium' $buttonStyle='green'>
-        Adicionar
-      </StyledButton>
-    </div>
-  </StyledProductCard>
-);
-
+interface IProductCardProps {
+  food: IFood;
+}
+const ProductCard = ({ food }: IProductCardProps) => {
+  const id = (e: number) => {
+    console.log(e);
+  };
+  return (
+    <StyledProductCard>
+      <div className="imageBox">
+        <img src={food.img} alt="Hamburguer" />
+      </div>
+      <div className="content">
+        <StyledTitle tag="h3" $fontSize="three">
+          {food.name}
+        </StyledTitle>
+        <StyledParagraph className="category">{food.category}</StyledParagraph>
+        <StyledParagraph className="price">R${food.price}</StyledParagraph>
+        <StyledButton
+          $buttonSize="medium"
+          $buttonStyle="green"
+          onClick={(e) => id(food.id)}
+        >
+          Adicionar
+        </StyledButton>
+      </div>
+    </StyledProductCard>
+  );
+};
 export default ProductCard;

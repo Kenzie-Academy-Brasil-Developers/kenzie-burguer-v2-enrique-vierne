@@ -7,14 +7,17 @@ import App from "./App";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { UserProvider } from "./components/Providers/userContext";
+import { CartProvider } from "./components/Providers/cartContext";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <UserProvider>
-        <ThemeProvider theme={mainTheme}>
-          <App />
-        </ThemeProvider>
+        <CartProvider>
+          <ThemeProvider theme={mainTheme}>
+            <App />
+          </ThemeProvider>
+        </CartProvider>
       </UserProvider>
     </BrowserRouter>
     <ToastContainer
