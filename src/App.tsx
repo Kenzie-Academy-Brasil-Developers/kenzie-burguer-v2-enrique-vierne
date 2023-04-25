@@ -8,7 +8,7 @@ const App = () => (
     <GlobalStyles />
     <Router />
     <ToastContainer
-    /* position="bottom-right"
+      position="top-left"
       autoClose={1500}
       hideProgressBar={false}
       newestOnTop
@@ -17,7 +17,7 @@ const App = () => (
       pauseOnFocusLoss
       draggable
       pauseOnHover
-      theme="light" */
+      theme="light"
     />
   </>
 );
