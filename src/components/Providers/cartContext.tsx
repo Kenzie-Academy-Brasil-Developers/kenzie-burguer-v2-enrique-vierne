@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { toast } from "react-toastify";
-import { set } from "zod";
 
 interface ICartProviderProps {
   children: React.ReactNode;
@@ -40,6 +39,7 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
           },
         });
         setFoodList(data);
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -65,6 +65,7 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
 
   const clearCart = () => {
     setCart([]);
+    toast.warning("Todos os produtos excluídos!");
   };
 
   return (

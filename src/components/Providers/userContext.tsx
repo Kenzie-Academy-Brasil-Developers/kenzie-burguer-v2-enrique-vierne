@@ -4,6 +4,7 @@ import { createContext, useEffect } from "react";
 import { TRegisterFormValues } from "../Form/RegisterForm/registerFormSchema";
 import { useNavigate } from "react-router-dom";
 import { TLoginFormValues } from "../Form/LoginForm/loginFormSchema";
+import { AxiosError } from "axios";
 
 interface IUserProviderProps {
   children: React.ReactNode;
@@ -50,16 +51,15 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
     }
     const userAutoLogin = async () => {
       try {
-        const { data } = await api.get<IUser>(`/users/${id}`, {
+        const { data } = await api.get<IUser>(`/user/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        toast.success("Auto Login bem sucedido");
+
         navigate("/shop");
-      } catch (error) {
-        /* toast.error(error.message); */
-        console.log(error);
+      } catch (error: any) {
+        toast.error(error.message);
       }
     };
 
@@ -79,9 +79,8 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
       localStorage.setItem("@USERID_KenzieBurguer", data.user.id);
       toast.success("Login bem sucedido");
       navigate("/shop");
-    } catch (error) {
-      /* toast.error(error.message); */
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -96,9 +95,8 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
       await api.post<IUserRegisterResponse>("/users", formData);
       toast.success("Usuário cadastrado");
       navigate("/");
-    } catch (error) {
-      /* toast.error(error.message); */
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
