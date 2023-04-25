@@ -6,7 +6,11 @@ import { StyledContainer } from "../../styles/grid";
 import { useContext } from "react";
 import { UserContext } from "../Providers/userContext";
 
-const Header = () => {
+export interface IHeaderProps {
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Header = ({ setIsOpen }: IHeaderProps) => {
   const { userLogout } = useContext(UserContext);
 
   return (
@@ -21,12 +25,7 @@ const Header = () => {
           <nav className="nav" role="navigation">
             <SearchForm />
             <div className="buttons">
-              <button
-                type="button"
-                onClick={() => {
-                  console.log("Criar lógica");
-                }}
-              >
+              <button type="button" onClick={() => setIsOpen(true)}>
                 <MdShoppingCart size={28} />
               </button>
               <button type="button" onClick={() => userLogout()}>
