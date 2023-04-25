@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { api } from "../../services/api";
+import { toast } from "react-toastify";
 
 interface ICartProviderProps {
   children: React.ReactNode;
@@ -15,14 +16,16 @@ export interface IFood {
 
 interface ICartContext {
   foodList: IFood[];
+  cart: IFood[];
+  setCart: React.Dispatch<React.SetStateAction<IFood[]>>;
+  addFoodToCart: (food: IFood) => void;
 }
 
 export const CartContext = createContext({} as ICartContext);
 
 export const CartProvider = ({ children }: ICartProviderProps) => {
   const [foodList, setFoodList] = useState<IFood[]>([]);
-
-  console.log("-> ~ foodList:", foodList);
+  const [cart, setCart] = useState<IFood[]>([]);
 
   useEffect(() => {
     const token = localStorage.getItem("@TOKEN_KenzieBurguer");
@@ -40,7 +43,20 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
     };
     loadFoodList();
   }, []);
+
+  const addFoodToCart = (newFood: IFood) => {
+    const newCart = [...cart, newFood];
+    if (!cart?.some((food) => food.id === newFood.id)) {
+      toast.success("Produto adicionado ao carrinho!");
+      setCart(newCart);
+    } else {
+      toast.warning("Produto duplicado!");
+    }
+  };
+
   return (
-    <CartContext.Provider value={{ foodList }}>{children}</CartContext.Provider>
+    <CartContext.Provider value={{ foodList, cart, setCart, addFoodToCart }}>
+      {children}
+    </CartContext.Provider>
   );
 };

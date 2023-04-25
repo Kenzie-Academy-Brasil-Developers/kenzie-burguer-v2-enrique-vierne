@@ -1,15 +1,15 @@
 import { StyledProductCard } from "./style";
 import { StyledButton } from "../../../styles/button";
 import { StyledParagraph, StyledTitle } from "../../../styles/typography";
-import { IFood } from "../../Providers/cartContext";
+import { CartContext, IFood } from "../../Providers/cartContext";
+import { useContext } from "react";
 
 interface IProductCardProps {
   food: IFood;
 }
 const ProductCard = ({ food }: IProductCardProps) => {
-  const id = (e: number) => {
-    console.log(e);
-  };
+  const { addFoodToCart } = useContext(CartContext);
+
   return (
     <StyledProductCard>
       <div className="imageBox">
@@ -24,7 +24,7 @@ const ProductCard = ({ food }: IProductCardProps) => {
         <StyledButton
           $buttonSize="medium"
           $buttonStyle="green"
-          onClick={(e) => id(food.id)}
+          onClick={() => addFoodToCart(food)}
         >
           Adicionar
         </StyledButton>
