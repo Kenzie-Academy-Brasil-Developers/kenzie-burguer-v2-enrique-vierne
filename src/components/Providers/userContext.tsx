@@ -18,6 +18,7 @@ interface IUserContext {
     formData: TLoginFormValues,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
   ) => Promise<void>;
+  userLogout: () => void;
 }
 
 interface IUser {
@@ -103,8 +104,15 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
     }
   };
 
+  const userLogout = () => {
+    localStorage.removeItem("@TOKEN_KenzieBurguer");
+    localStorage.removeItem("@USERID_KenzieBurguer");
+    toast.warning("Logout bem sucedido!");
+    navigate("/");
+  };
+
   return (
-    <UserContext.Provider value={{ userRegister, userLogin }}>
+    <UserContext.Provider value={{ userRegister, userLogin, userLogout }}>
       {children}
     </UserContext.Provider>
   );
