@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
-import { createContext } from "react";
+import { createContext, useEffect } from "react";
 import { TRegisterFormValues } from "../Form/RegisterForm/registerFormSchema";
 import { useNavigate } from "react-router-dom";
 import { TLoginFormValues } from "../Form/LoginForm/loginFormSchema";
@@ -40,6 +40,32 @@ export const UserContext = createContext({} as IUserContext);
 
 export const UserProvider = ({ children }: IUserProviderProps) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("@TOKEN_KenzieBurguer");
+    const id = localStorage.getItem("@USERID_KenzieBurguer");
+    if (!token) {
+      navigate("/");
+    }
+    const userAutoLogin = async () => {
+      try {
+        const { data } = await api.get<IUser>(`/users/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        toast.success("Auto Login bem sucedido");
+        navigate("/shop");
+      } catch (error) {
+        /* toast.error(error.message); */
+        console.log(error);
+      }
+    };
+
+    if (token && id) {
+      userAutoLogin();
+    }
+  }, []);
 
   const userLogin = async (
     formData: TLoginFormValues,
