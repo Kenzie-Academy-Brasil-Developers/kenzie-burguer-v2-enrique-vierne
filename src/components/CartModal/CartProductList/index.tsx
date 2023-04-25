@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { CartContext } from "../../Providers/cartContext";
 
 const CartProductList = () => {
-  const { cart } = useContext(CartContext);
+  const { cart, clearCart } = useContext(CartContext);
 
   return (
     <StyledCartProductList>
@@ -27,7 +27,11 @@ const CartProductList = () => {
         </StyledParagraph>
         <StyledParagraph className="total">R$ 14,00</StyledParagraph>
       </div>
-      <StyledButton $buttonSize="default" $buttonStyle="gray">
+      <StyledButton
+        $buttonSize="default"
+        $buttonStyle="gray"
+        onClick={() => clearCart()}
+      >
         Remover todos
       </StyledButton>
     </StyledCartProductList>

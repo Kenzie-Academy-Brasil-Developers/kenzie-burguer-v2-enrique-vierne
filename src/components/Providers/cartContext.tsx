@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { toast } from "react-toastify";
+import { set } from "zod";
 
 interface ICartProviderProps {
   children: React.ReactNode;
@@ -19,6 +20,8 @@ interface ICartContext {
   cart: IFood[];
   setCart: React.Dispatch<React.SetStateAction<IFood[]>>;
   addFoodToCart: (food: IFood) => void;
+  removeFoodFromCart: (id: number) => void;
+  clearCart: () => void;
 }
 
 export const CartContext = createContext({} as ICartContext);
@@ -54,8 +57,27 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
     }
   };
 
+  const removeFoodFromCart = (id: number) => {
+    const newCart = cart.filter((food) => food.id !== id);
+    toast.warning("Produto excluído!");
+    setCart(newCart);
+  };
+
+  const clearCart = () => {
+    setCart([]);
+  };
+
   return (
-    <CartContext.Provider value={{ foodList, cart, setCart, addFoodToCart }}>
+    <CartContext.Provider
+      value={{
+        foodList,
+        cart,
+        setCart,
+        addFoodToCart,
+        removeFoodFromCart,
+        clearCart,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
