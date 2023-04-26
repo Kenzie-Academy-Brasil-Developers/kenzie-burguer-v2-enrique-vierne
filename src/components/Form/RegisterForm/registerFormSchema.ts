@@ -11,7 +11,7 @@ export const registerFormSchema = z
       .email("Forneça um e-mail válido"),
     password: z
       .string()
-      .min(7, "A senha precisa conter pelo menos 8 caracteres")
+      .min(7, "A senha precisa conter pelo menos 7 caracteres")
       .regex(
         /(?=.*?[#?!@$%^&*-])/,
         "É necessário pelo menos um caracter especial"

@@ -1,11 +1,15 @@
 import { MdClose } from "react-icons/md";
 import CartProductList from "./CartProductList";
-
 import { StyledCartModalBox } from "./style";
 import { StyledParagraph, StyledTitle } from "../../styles/typography";
-import { IHeaderProps } from "../Header";
 
-const CartModal = ({ setIsOpen }: IHeaderProps) => {
+interface ICartModalProps {
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  cart: [];
+}
+
+const CartModal = ({ setIsOpen, cart }: ICartModalProps) => {
+  console.log(cart);
   return (
     <StyledCartModalBox>
       <dialog>
@@ -24,12 +28,16 @@ const CartModal = ({ setIsOpen }: IHeaderProps) => {
         <div className="cartBox">
           <CartProductList />
 
-          <div className="emptyBox">
-            <StyledTitle tag="h3" $fontSize="three" textAlign="center">
-              Sua sacola está vazia
-            </StyledTitle>
-            <StyledParagraph textAlign="center">Adicione itens</StyledParagraph>
-          </div>
+          {cart.length > 0 ? null : (
+            <div className="emptyBox">
+              <StyledTitle tag="h3" $fontSize="three" textAlign="center">
+                Sua sacola está vazia
+              </StyledTitle>
+              <StyledParagraph textAlign="center">
+                Adicione itens
+              </StyledParagraph>
+            </div>
+          )}
         </div>
       </dialog>
     </StyledCartModalBox>
