@@ -14,13 +14,18 @@ export interface IFood {
   img: string;
 }
 
-interface ICartContext {
+export interface ICartContext {
   foodList: IFood[];
   cart: IFood[];
   setCart: React.Dispatch<React.SetStateAction<IFood[]>>;
   addFoodToCart: (food: IFood) => void;
   removeFoodFromCart: (id: number) => void;
   clearCart: () => void;
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  searchInput: string;
+  setSearchInput: React.Dispatch<React.SetStateAction<string>>;
+  filteredProducts: IFood[];
 }
 
 export const CartContext = createContext({} as ICartContext);
@@ -28,6 +33,8 @@ export const CartContext = createContext({} as ICartContext);
 export const CartProvider = ({ children }: ICartProviderProps) => {
   const [foodList, setFoodList] = useState<IFood[]>([]);
   const [cart, setCart] = useState<IFood[]>([]);
+  const [search, setSearch] = useState("");
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("@TOKEN_KenzieBurguer");
@@ -67,6 +74,13 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
     toast.warning("Todos os produtos excluídos!");
   };
 
+  const filteredProducts = foodList.filter(
+    (product) =>
+      product.name.toLowerCase().includes(search.toLowerCase()) ||
+      product.category.toLowerCase().includes(search.toLowerCase()) ||
+      product.price.toString() === search
+  );
+
   return (
     <CartContext.Provider
       value={{
@@ -76,6 +90,11 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
         addFoodToCart,
         removeFoodFromCart,
         clearCart,
+        search,
+        setSearch,
+        searchInput,
+        setSearchInput,
+        filteredProducts,
       }}
     >
       {children}

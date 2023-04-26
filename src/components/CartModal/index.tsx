@@ -2,14 +2,14 @@ import { MdClose } from "react-icons/md";
 import CartProductList from "./CartProductList";
 import { StyledCartModalBox } from "./style";
 import { StyledParagraph, StyledTitle } from "../../styles/typography";
+import { IFood } from "../Providers/cartContext";
 
 interface ICartModalProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  cart: [];
+  cart: IFood[];
 }
 
 const CartModal = ({ setIsOpen, cart }: ICartModalProps) => {
-  console.log(cart);
   return (
     <StyledCartModalBox>
       <dialog>

@@ -1,14 +1,22 @@
 import { MdSearch } from "react-icons/md";
 import { StyledSearchForm } from "./style";
 import { StyledButton } from "../../../styles/button";
+import { useContext } from "react";
+import { CartContext } from "../../Providers/cartContext";
 
 const SearchForm = () => {
+  const { searchInput, setSearchInput, setSearch } = useContext(CartContext);
   const submit = (e: any) => {
-    console.log(e.target.value);
+    e.preventDefault();
+    setSearch(searchInput);
   };
   return (
-    <StyledSearchForm onSubmit={(e) => submit(e)}>
-      <input type="text" placeholder="Digitar pesquisa" />
+    <StyledSearchForm onSubmit={submit}>
+      <input
+        type="text"
+        placeholder="Digitar pesquisa"
+        onChange={(e) => setSearchInput(e.target.value)}
+      />
       <StyledButton type="submit" $buttonSize="medium" $buttonStyle="green">
         <MdSearch />
       </StyledButton>
